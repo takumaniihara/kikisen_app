@@ -10,48 +10,33 @@
         android:id="@+id/btSkip"
         android:layout_width="342dp"
         android:layout_height="58dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:text="skip bouyomi"
+        android:text="STOP READ"
+        app:layout_constraintBottom_toTopOf="@+id/tvIP"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/etSendString"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="text "
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="7dp"
-        app:layout_constraintRight_toLeftOf="@+id/btSend"
-        android:layout_marginRight="8dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1.00"
-        android:text="Hello World"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toLeftOf="@+id/btSend"
+        app:layout_constraintHorizontal_bias="1.0" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -71,15 +56,16 @@
 
     <Button
         android:id="@+id/btSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
+        android:layout_width="71dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="27dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginRight="16dp"
         android:text="Send"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="441dp"
+        tools:layout_editor_absoluteX="297dp" />
 
     <EditText
         android:id="@+id/etIP"
@@ -87,11 +73,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="26dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
+        android:digits="0123456789."
         android:text="192.168.11.150"
         app:layout_constraintLeft_toRightOf="@+id/textView3"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar2" />
+        app:layout_constraintBottom_toTopOf="@+id/progressBar2"
+        android:layout_marginStart="26dp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -102,7 +90,8 @@
         android:text="IP"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         app:layout_constraintBottom_toTopOf="@+id/progressBar2"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp" />
 
     <Button
         android:id="@+id/btStart"
@@ -114,7 +103,9 @@
         android:text="START"
         app:layout_constraintBottom_toTopOf="@+id/progressBar2"
         app:layout_constraintLeft_toRightOf="@+id/etIP"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/tvIP"
@@ -125,6 +116,21 @@
         android:layout_marginRight="8dp"
         android:text="not started. enter IP and press start button"
         app:layout_constraintBottom_toTopOf="@+id/etIP"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <TextView
+        android:id="@+id/etLog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="chat log "
+        app:layout_constraintBottom_toTopOf="@+id/btSkip"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
