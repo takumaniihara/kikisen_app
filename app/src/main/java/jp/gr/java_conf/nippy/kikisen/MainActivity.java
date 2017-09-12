@@ -2,12 +2,16 @@ package jp.gr.java_conf.nippy.kikisen;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.sql.Time;
 
 
 public class MainActivity extends Activity {
@@ -18,7 +22,9 @@ public class MainActivity extends Activity {
     EditText etSendString;
     EditText etIP;
     TextView etLog;
+    ProgressBar pbTimer;
     BouyomiChan4J bouyomi;
+
 
     /**
      * Called when the activity is first created.
@@ -34,7 +40,7 @@ public class MainActivity extends Activity {
         etIP = (EditText) findViewById(R.id.etIP);
         etLog = (TextView) findViewById(R.id.etLog);
         etLog.setEnabled(false);
-
+        pbTimer = (ProgressBar) findViewById(R.id.pbTimer);
 
         //SEND button
         Button btn = (Button) findViewById(R.id.btSend);
@@ -56,6 +62,7 @@ public class MainActivity extends Activity {
         etSendString.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //enter pressed
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER) && !(etSendString.getText().toString().equals(""))) {
                     //送信 この部分はきれいにする必要あり TODO
                     new Thread(new Runnable() {
@@ -71,11 +78,9 @@ public class MainActivity extends Activity {
             }
         });
 
-
         // SKIP button
         Button btSkip = (Button) findViewById(R.id.btSkip);
         btSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
                 new Thread(new Runnable() {
                     public void run() {
