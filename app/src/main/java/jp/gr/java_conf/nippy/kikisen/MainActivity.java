@@ -12,8 +12,9 @@ public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getName();
 
-    TextView tv;
-    EditText et;
+    TextView tvIP;
+    EditText etSendString;
+    EditText etIP;
     BouyomiChan4J bouyomi;
 
     /**
@@ -24,8 +25,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv = (TextView) findViewById(R.id.textView);
-        et = (EditText) findViewById(R.id.edittext);
+        tvIP = (TextView) findViewById(R.id.tvIP);
+        etSendString = (EditText) findViewById(R.id.etSendString);
+        etIP = (EditText) findViewById(R.id.etIP);
 
 
         //SEND button
@@ -33,19 +35,17 @@ public class MainActivity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv.setText("pressed");
-                final String hoge = et.getText().toString();
                 new Thread(new Runnable() {
                     public void run() {
-                        bouyomi.talk("" + hoge);
+                        bouyomi.talk("" + etSendString.getText().toString());
                     }
                 }).start();
             }
         });
 
         // SKIP button
-        Button btnSkip = (Button) findViewById(R.id.button);
-        btnSkip.setOnClickListener(new View.OnClickListener(){
+        Button btSkip = (Button) findViewById(R.id.btSkip);
+        btSkip.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 new Thread(new Runnable() {
@@ -55,16 +55,25 @@ public class MainActivity extends Activity {
                 }).start();
             }
         });
-
-
-
+        //START button
+        Button btStart = (Button) findViewById(R.id.btStart);
+        btStart.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                tvIP.setText("started on IP : " +  etIP.getText().toString());
+                new Thread(new Runnable() {
+                    public void run() {
+                        bouyomi = new BouyomiChan4J(etIP.getText().toString(), 50001);
+                    }
+                }).start();
+            }
+        });
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        tv.setText("started ");
-        bouyomi = new BouyomiChan4J("192.168.11.150", 50001);
+        bouyomi = new BouyomiChan4J("192.168.11.15", 50001);
     }
 
     @Override
