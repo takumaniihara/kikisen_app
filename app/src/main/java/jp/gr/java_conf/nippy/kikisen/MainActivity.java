@@ -3,8 +3,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -13,6 +13,7 @@ public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getName();
 
     TextView tv;
+    EditText et;
     BouyomiChan4J bouyomi;
 
     /**
@@ -24,12 +25,16 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         tv = (TextView) findViewById(R.id.textView);
-        Button btn = (Button) findViewById(R.id.button);
+        et = (EditText) findViewById(R.id.edittext);
+
+
+        //SEND button
+        Button btn = (Button) findViewById(R.id.btSend);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tv.setText("pressed");
-                final String hoge = (String)tv.getText();
+                final String hoge = et.getText().toString();
                 new Thread(new Runnable() {
                     public void run() {
                         bouyomi.talk("" + hoge);
@@ -37,8 +42,10 @@ public class MainActivity extends Activity {
                 }).start();
             }
         });
-        Button btnClear = (Button) findViewById(R.id.button2);
-        btnClear.setOnClickListener(new View.OnClickListener(){
+
+        // SKIP button
+        Button btnSkip = (Button) findViewById(R.id.button);
+        btnSkip.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 new Thread(new Runnable() {
@@ -48,6 +55,9 @@ public class MainActivity extends Activity {
                 }).start();
             }
         });
+
+
+
     }
 
     @Override
