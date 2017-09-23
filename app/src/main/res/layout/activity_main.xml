@@ -25,31 +25,29 @@
     <EditText
         android:id="@+id/etSendString"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="21dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btSend"
-        app:layout_constraintHorizontal_bias="1.0" />
+        android:layout_marginRight="8dp" />
 
     <Button
         android:id="@+id/btSend"
-        android:layout_width="83dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="28dp"
+        android:layout_width="89dp"
+        android:layout_height="76dp"
+        android:layout_marginBottom="21dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Send"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="504dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/tvIP"
@@ -65,5 +63,96 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         app:layout_constraintHorizontal_bias="0.496" />
+
+    <LinearLayout
+        android:layout_width="395dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintBottom_toTopOf="@+id/btSend"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="0.36"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="いいえ"
+                android:textSize="30sp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="176dp" />
+
+            <Button
+                android:id="@+id/btEnemy"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="敵"
+                android:textSize="30sp"
+                tools:layout_editor_absoluteX="161dp"
+                tools:layout_editor_absoluteY="186dp" />
+
+            <Button
+                android:id="@+id/btYes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="はい"
+                android:textSize="30sp"
+                tools:layout_editor_absoluteX="296dp"
+                tools:layout_editor_absoluteY="196dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_weight="0.35"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btDirection"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="方位"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="116dp"
+                tools:layout_editor_absoluteY="292dp" />
+
+            <Button
+                android:id="@+id/btDistance"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="距離"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="216dp"
+                tools:layout_editor_absoluteY="292dp" />
+
+            <Button
+                android:id="@+id/btNumber"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="数"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="292dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
