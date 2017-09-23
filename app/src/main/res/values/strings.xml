@@ -31,11 +31,11 @@
     </string-array>
 
     <string-array name="list_preference_voice_speed">
-        <item>かなり速い</item>
+        <item>最速</item>
         <item>速い</item>
         <item>普通</item>
         <item>遅い</item>
-        <item>かなり遅い</item>
+        <item>最も遅い</item>
     </string-array>
     <string-array name="list_preference_voice_speed_value">
         <item>200</item>

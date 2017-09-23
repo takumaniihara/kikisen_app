@@ -22,6 +22,12 @@ public class MainActivity extends Activity {
     TextView tvIP;
     EditText etSendString;
     Button btSend;
+    Button btNo;
+    Button btYes;
+    Button btEnemy;
+    Button btDirection;
+    Button btDistance;
+    Button btNumber;
     BouyomiChan4J bouyomi;
     SharedPreferences pref;
 
@@ -39,6 +45,12 @@ public class MainActivity extends Activity {
         etSendString = (EditText) findViewById(R.id.etSendString);
         btSend = (Button) findViewById(R.id.btSend);
         etSendString.setEnabled(true);
+        btNo = (Button) findViewById(R.id.btNo);
+        btYes = (Button) findViewById(R.id.btYes);
+        btEnemy = (Button) findViewById(R.id.btEnemy);
+        btDirection = (Button) findViewById(R.id.btDirection);
+        btDistance = (Button) findViewById(R.id.btDistance);
+        btNumber = (Button) findViewById(R.id.btNumber);
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -46,12 +58,7 @@ public class MainActivity extends Activity {
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String str = etSendString.getText().toString();
-                new Thread(new Runnable() {
-                    public void run() {
-                        talk(str);
-                    }
-                }).start();
+                talk(etSendString.getText().toString());
                 etSendString.getEditableText().clear();
             }
         });
@@ -60,16 +67,57 @@ public class MainActivity extends Activity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER) && !(etSendString.getText().toString().equals(""))) {
-                    final String str = etSendString.getText().toString();
-                    new Thread(new Runnable() {
-                        public void run() {
-                            talk(str);
-                        }
-                    }).start();
+                    talk(etSendString.getText().toString());
                     etSendString.getEditableText().clear();
                     return true;
                 }
                 return false;
+            }
+        });
+
+        //No button
+        btNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                talk("いいえ");
+            }
+        });
+        //Yes button
+        btYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                talk("はい");
+            }
+        });
+        //Enemy button
+        btEnemy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                talk("てき");
+            }
+        });
+        //Direction button
+        btDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                talk("ほういにゅうりょくがめんよてい");
+                //TODO enter direction
+            }
+        });
+        //Distance button
+        btDistance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                talk("きょりにゅうりょくがめんよてい");
+                //TODO enter distance
+            }
+        });
+        //Number button
+        btNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                talk("にんずうにゅうりょくがめんよてい");
+                //TODO enter number
             }
         });
 
@@ -79,6 +127,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 new Thread(new Runnable() {
                     public void run() {
+                        bouyomi.clear();
                         bouyomi.skip();
                     }
                 }).start();
@@ -86,11 +135,18 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void talk(String str) {
-        //TODO 設定から速度とかの反映を行う 棒読みを起動する前にアプリを起動すると落ちる？
+    //send string to bouyomi-chan
+    private void talk(final String str) {
         if (!(str.equals(""))) {
-            //volume speed tone voice message
-            bouyomi.talk(Integer.parseInt(pref.getString("list_preference_volume","50")), Integer.parseInt(pref.getString("list_preference_speed","100")), Integer.parseInt(pref.getString("list_preference_interval","100")), Integer.parseInt(pref.getString("list_preference_type","0")), str);
+            new Thread(new Runnable() {
+                public void run() {
+                    bouyomi.talk(Integer.parseInt(pref.getString("list_preference_volume","50")),
+                            Integer.parseInt(pref.getString("list_preference_speed","100")),
+                            Integer.parseInt(pref.getString("list_preference_interval","100")),
+                            Integer.parseInt(pref.getString("list_preference_type","0")),
+                            str);
+                }
+            }).start();
         }
     }
 
@@ -143,7 +199,7 @@ public class MainActivity extends Activity {
                 bouyomi = new BouyomiChan4J(pref.getString("edit_text_preference_ip", "127.0.0.1"), Integer.parseInt(pref.getString("edit_text_preference_port", "50001")));
             }
         }).start();
-        tvIP.setText("started \nip:" + pref.getString("edit_text_preference_ip", "127.0.0.1") + "\nport:" + pref.getString("edit_text_preference_port", "50001")
+        tvIP.setText("開始しました \nip:" + pref.getString("edit_text_preference_ip", "127.0.0.1") + "\nport:" + pref.getString("edit_text_preference_port", "50001")
                 + "\nvolume:" + pref.getString("list_preference_volume","50") + "\nspeed:"+ pref.getString("list_preference_speed","100")
                 + "\ninterval:"+ pref.getString("list_preference_interval","100") + "\nvoice type:" + pref.getString("list_preference_type:","0"));
     }
