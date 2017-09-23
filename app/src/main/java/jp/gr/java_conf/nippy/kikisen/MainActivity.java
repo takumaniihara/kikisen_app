@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
         //TODO 設定から速度とかの反映を行う 棒読みを起動する前にアプリを起動すると落ちる？
         if (!(str.equals(""))) {
             //volume speed tone voice message
-            bouyomi.talk(Integer.parseInt(pref.getString("list_preference_volume","-1")), Integer.parseInt(pref.getString("list_preference_speed","-1")), Integer.parseInt(pref.getString("list_preference_interval","-1")), Integer.parseInt(pref.getString("list_preference_type","0")), str);
+            bouyomi.talk(Integer.parseInt(pref.getString("list_preference_volume","50")), Integer.parseInt(pref.getString("list_preference_speed","100")), Integer.parseInt(pref.getString("list_preference_interval","100")), Integer.parseInt(pref.getString("list_preference_type","0")), str);
         }
     }
 
@@ -141,8 +141,8 @@ public class MainActivity extends Activity {
             }
         }).start();
         tvIP.setText("started \nip:" + pref.getString("edit_text_preference_ip", "127.0.0.1") + "\nport:" + pref.getString("edit_text_preference_port", "50001")
-                + "\nvolume:" + pref.getString("list_preference_volume","-1") + "\nspeed:"+ pref.getString("list_preference_speed","-1")
-                + "\ninterval:"+ pref.getString("list_preference_interval","-1") + "\nvoice type:" + pref.getString("list_preference_type:","0"));
+                + "\nvolume:" + pref.getString("list_preference_volume","50") + "\nspeed:"+ pref.getString("list_preference_speed","100")
+                + "\ninterval:"+ pref.getString("list_preference_interval","100") + "\nvoice type:" + pref.getString("list_preference_type:","0"));
     }
 
     @Override

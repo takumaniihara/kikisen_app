@@ -14,6 +14,7 @@ public class AboutThisAppActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aboutthisapp);
+        setTitle("このアプリについて");
 
     }
 }

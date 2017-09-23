@@ -5,35 +5,41 @@
         android:digits="0123456789."
         android:inputType="number"
         android:key="edit_text_preference_ip"
+        android:summary="PCのIPアドレス"
         android:title="IP address" />
     <EditTextPreference
         android:defaultValue="50001"
         android:inputType="number"
         android:key="edit_text_preference_port"
         android:selectAllOnFocus="true"
+        android:summary="PCのポート番号"
         android:title="port" />
     <ListPreference
-        android:defaultValue="1"
+        android:defaultValue="0"
         android:entries="@array/list_preference_voice_type"
         android:entryValues="@array/list_preference_voice_type_value"
         android:key="list_preference_type"
+        android:summary="%s"
         android:title="voice type" />
     <ListPreference
         android:defaultValue="100"
         android:entries="@array/list_preference_voice_speed"
         android:entryValues="@array/list_preference_voice_speed_value"
         android:key="list_preference_speed"
+        android:summary="%s"
         android:title="speed" />
     <ListPreference
         android:defaultValue="100"
         android:entries="@array/list_preference_voice_interval"
         android:entryValues="@array/list_preference_voice_interval_value"
         android:key="list_preference_interval"
+        android:summary="%s"
         android:title="interval" />
     <ListPreference
         android:defaultValue="50"
         android:entries="@array/list_preference_voice_volume"
         android:entryValues="@array/list_preference_voice_volume_value"
         android:key="list_preference_volume"
+        android:summary="%s"
         android:title="volume" />
 </PreferenceScreen>

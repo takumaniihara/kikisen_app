@@ -9,6 +9,7 @@
 
     <!-- settings for Main settings -->
     <string-array name="list_preference_voice_type">
+        <item>棒読みちゃんデフォルト</item>
         <item>女性1</item>
         <item>女性2</item>
         <item>男性1</item>
@@ -19,6 +20,7 @@
         <item>機械2</item>
     </string-array>
     <string-array name="list_preference_voice_type_value">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>

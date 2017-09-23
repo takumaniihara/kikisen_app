@@ -14,6 +14,7 @@ public class HowToUseActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_howtouse);
+        setTitle("使い方");
 
     }
 }
