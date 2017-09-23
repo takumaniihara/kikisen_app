@@ -111,16 +111,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("ほういにゅうりょくがめんよてい");
                 //TODO enter direction
-                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
-                alertDialog.setTitle("hi");
-                alertDialog.setMessage("comming soon (tm)");
-
-                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // here you can add functions
-                    }
-                });
-                alertDialog.show();
+                FireMissilesDialogFragment hoge = new FireMissilesDialogFragment();
+                hoge.show(getFragmentManager(), "test");
             }
         });
         //Distance button
