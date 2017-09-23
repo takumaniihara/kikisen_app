@@ -1,6 +1,7 @@
 package jp.gr.java_conf.nippy.kikisen;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 /**
@@ -13,6 +14,7 @@ public class AboutThisAppActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_aboutthisapp);
         setTitle("このアプリについて");
 
