@@ -1,6 +1,8 @@
 package jp.gr.java_conf.nippy.kikisen;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -38,7 +40,7 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
         tvIP = (TextView) findViewById(R.id.tvIP);
@@ -89,6 +91,13 @@ public class MainActivity extends Activity {
                 talk("はい");
             }
         });
+        btYes.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                talk("ろんぐくりっく");
+                return true;
+            }
+        });
         //Enemy button
         btEnemy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,24 +109,54 @@ public class MainActivity extends Activity {
         btDirection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                talk("ほういにゅうりょくがめんよてい");
+                //talk("ほういにゅうりょくがめんよてい");
                 //TODO enter direction
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
+                alertDialog.setTitle("hi");
+                alertDialog.setMessage("comming soon (tm)");
+
+                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // here you can add functions
+                    }
+                });
+                alertDialog.show();
             }
         });
         //Distance button
         btDistance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                talk("きょりにゅうりょくがめんよてい");
+                //talk("きょりにゅうりょくがめんよてい");
                 //TODO enter distance
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
+                alertDialog.setTitle("hi");
+                alertDialog.setMessage("comming soon (tm)");
+
+                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // here you can add functions
+                    }
+                });
+                alertDialog.show();
             }
         });
         //Number button
         btNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                talk("にんずうにゅうりょくがめんよてい");
+                //talk("にんずうにゅうりょくがめんよてい");
                 //TODO enter number
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
+                alertDialog.setTitle("hi");
+                alertDialog.setMessage("comming soon (tm)");
+
+                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // here you can add functions
+                    }
+                });
+                alertDialog.show();
             }
         });
 
@@ -140,10 +179,10 @@ public class MainActivity extends Activity {
         if (!(str.equals(""))) {
             new Thread(new Runnable() {
                 public void run() {
-                    bouyomi.talk(Integer.parseInt(pref.getString("list_preference_volume","50")),
-                            Integer.parseInt(pref.getString("list_preference_speed","100")),
-                            Integer.parseInt(pref.getString("list_preference_interval","100")),
-                            Integer.parseInt(pref.getString("list_preference_type","0")),
+                    bouyomi.talk(Integer.parseInt(pref.getString("list_preference_volume", "50")),
+                            Integer.parseInt(pref.getString("list_preference_speed", "100")),
+                            Integer.parseInt(pref.getString("list_preference_interval", "100")),
+                            Integer.parseInt(pref.getString("list_preference_type", "0")),
                             str);
                 }
             }).start();
@@ -200,8 +239,8 @@ public class MainActivity extends Activity {
             }
         }).start();
         tvIP.setText("開始しました \nip:" + pref.getString("edit_text_preference_ip", "127.0.0.1") + "\nport:" + pref.getString("edit_text_preference_port", "50001")
-                + "\nvolume:" + pref.getString("list_preference_volume","50") + "\nspeed:"+ pref.getString("list_preference_speed","100")
-                + "\ninterval:"+ pref.getString("list_preference_interval","100") + "\nvoice type:" + pref.getString("list_preference_type:","0"));
+                + "\nvolume:" + pref.getString("list_preference_volume", "50") + "\nspeed:" + pref.getString("list_preference_speed", "100")
+                + "\ninterval:" + pref.getString("list_preference_interval", "100") + "\nvoice type:" + pref.getString("list_preference_type:", "0"));
     }
 
     @Override
