@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import jp.gr.java_conf.nippy.kikisen.dialog.YesDialogFragment;
+
 public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getName();
@@ -94,7 +96,8 @@ public class MainActivity extends Activity {
         btYes.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                talk("ろんぐくりっく");
+                YesDialogFragment yesDialog = new YesDialogFragment();
+                yesDialog.show(getFragmentManager(), "yes");
                 return true;
             }
         });
