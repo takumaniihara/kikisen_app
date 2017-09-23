@@ -1,18 +1,18 @@
 package jp.gr.java_conf.nippy.kikisen;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.sql.Time;
-
 
 public class MainActivity extends Activity {
 
@@ -20,11 +20,9 @@ public class MainActivity extends Activity {
 
     TextView tvIP;
     EditText etSendString;
-    EditText etIP;
-    TextView etLog;
-    ProgressBar pbTimer;
+    Button btSend;
     BouyomiChan4J bouyomi;
-
+    SharedPreferences pref;
 
     /**
      * Called when the activity is first created.
@@ -36,26 +34,21 @@ public class MainActivity extends Activity {
 
         tvIP = (TextView) findViewById(R.id.tvIP);
         etSendString = (EditText) findViewById(R.id.etSendString);
+        btSend = (Button) findViewById(R.id.btSend);
         etSendString.setEnabled(true);
-        etIP = (EditText) findViewById(R.id.etIP);
-        etLog = (TextView) findViewById(R.id.etLog);
-        etLog.setEnabled(false);
-        pbTimer = (ProgressBar) findViewById(R.id.pbTimer);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
 
         //SEND button
-        Button btn = (Button) findViewById(R.id.btSend);
-        btn.setOnClickListener(new View.OnClickListener() {
+        btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ココらへんは下のkeylistenerと統合するべき TODO
+                final String str = etSendString.getText().toString();
                 new Thread(new Runnable() {
                     public void run() {
-                        bouyomi.talk("" + etSendString.getText().toString());
+                        talk(str);
                     }
                 }).start();
-                if (!(etSendString.getText().toString().equals(""))) {
-                    etLog.setText(etLog.getText().toString() + "\n" + etSendString.getText().toString());
-                }
                 etSendString.getEditableText().clear();
             }
         });
@@ -64,13 +57,12 @@ public class MainActivity extends Activity {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 //enter pressed
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER) && !(etSendString.getText().toString().equals(""))) {
-                    //送信 この部分はきれいにする必要あり TODO
+                    final String str = etSendString.getText().toString();
                     new Thread(new Runnable() {
                         public void run() {
-                            bouyomi.talk("" + etSendString.getText().toString());
+                            talk(str);
                         }
                     }).start();
-                    etLog.setText(etLog.getText().toString() + "\n" + etSendString.getText().toString());
                     etSendString.getEditableText().clear();
                     return true;
                 }
@@ -89,30 +81,72 @@ public class MainActivity extends Activity {
                 }).start();
             }
         });
-        //START button
-        Button btStart = (Button) findViewById(R.id.btStart);
-        btStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvIP.setText("started on IP : " + etIP.getText().toString());
-                new Thread(new Runnable() {
-                    public void run() {
-                        bouyomi = new BouyomiChan4J(etIP.getText().toString(), 50001);
-                    }
-                }).start();
-            }
-        });
+    }
+
+    private void talk(String str) {
+        //TODO 設定から速度とかの反映を行う 棒読みを起動する前にアプリを起動すると落ちる？
+        if (!(str.equals(""))) {
+            //volume speed tone voice message
+            bouyomi.talk(Integer.parseInt(pref.getString("list_preference_volume","-1")), Integer.parseInt(pref.getString("list_preference_speed","-1")), Integer.parseInt(pref.getString("list_preference_interval","-1")), Integer.parseInt(pref.getString("list_preference_type","0")), str);
+        }
+    }
+
+    //menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.optionsMenu_01:
+                Intent intent1 = new android.content.Intent(this, MainPreferenceActivity.class);
+                startActivity(intent1);
+                return true;
+            case R.id.optionsMenu_02:
+                Intent intent2 = new android.content.Intent(this, HowToUseActivity.class);
+                startActivity(intent2);
+                return true;
+            case R.id.optionsMenu_03:
+                Intent intent3 = new android.content.Intent(this, AboutThisAppActivity.class);
+                startActivity(intent3);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public void onStart() {
+        Log.v(TAG, "onStart");
         super.onStart();
-        bouyomi = new BouyomiChan4J("192.168.11.15", 50001);
     }
 
     @Override
     public void onStop() {
-        super.onStop();
         Log.v(TAG, "onStop");
+        super.onStop();
+        bouyomi = null;
+    }
+
+    @Override
+    public void onResume() {
+        Log.v(TAG, "onResume");
+        super.onResume();
+        new Thread(new Runnable() {
+            public void run() {
+                bouyomi = new BouyomiChan4J(pref.getString("edit_text_preference_ip", "127.0.0.1"), Integer.parseInt(pref.getString("edit_text_preference_port", "50001")));
+            }
+        }).start();
+        tvIP.setText("started on ip" + pref.getString("edit_text_preference_ip", "127.0.0.1") + "port" + pref.getString("edit_text_preference_port", "50001")
+                + "volume" + pref.getString("list_preference_volume","-1") + "speed"+ pref.getString("list_preference_speed","-1")+ "interval"+ pref.getString("list_preference_interval","-1") + "type" + pref.getString("list_preference_type","0"));
+    }
+
+    @Override
+    public void onPause() {
+        Log.v(TAG, "onPause");
+        super.onPause();
     }
 }
