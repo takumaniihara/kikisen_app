@@ -1,10 +1,12 @@
 <resources>
+    <!-- Strings related to Application -->
     <string name="app_name">聞き専</string>
-
     <string name = "cancel">キャンセル</string>
+    <string name = "ok">OK</string>
+
+    <!-- Strings related to TEST -->
     <string name = "dialog_fire_missiles">このアプリについて</string>
     <string name = "fire">ファイヤ！</string>
-
 
     <!-- Strings related to Button -->
     <string-array name="list_yes_lognclick">

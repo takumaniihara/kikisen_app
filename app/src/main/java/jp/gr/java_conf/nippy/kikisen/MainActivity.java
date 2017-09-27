@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import jp.gr.java_conf.nippy.kikisen.dialog.DirectionDialogFragment;
+import jp.gr.java_conf.nippy.kikisen.dialog.DistanceDialogFragment;
+import jp.gr.java_conf.nippy.kikisen.dialog.NumberDialogFragment;
 import jp.gr.java_conf.nippy.kikisen.dialog.YesDialogFragment;
 
 public class MainActivity extends Activity {
@@ -98,8 +101,8 @@ public class MainActivity extends Activity {
         btYes.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                YesDialogFragment yesDialog = new YesDialogFragment();
-                yesDialog.show(getFragmentManager(), "yes");
+                YesDialogFragment yesDialogFragment = new YesDialogFragment();
+                yesDialogFragment.show(getFragmentManager(), "yes");
                 return true;
             }
         });
@@ -116,8 +119,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("ほういにゅうりょくがめんよてい");
                 //TODO enter direction
-                FireMissilesDialogFragment hoge = new FireMissilesDialogFragment();
-                hoge.show(getFragmentManager(), "test");
+                DirectionDialogFragment directionDialogFragment = new DirectionDialogFragment();
+                directionDialogFragment.show(getFragmentManager(), "yes");
             }
         });
         //Distance button
@@ -126,6 +129,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("きょりにゅうりょくがめんよてい");
                 //TODO enter distance
+                DistanceDialogFragment distanceDialogFragment = new DistanceDialogFragment();
+                distanceDialogFragment.show(getFragmentManager(), "yes");
             }
         });
         //Number button
@@ -134,6 +139,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("にんずうにゅうりょくがめんよてい");
                 //TODO enter number
+                NumberDialogFragment numberDialogFragment = new NumberDialogFragment();
+                numberDialogFragment.show(getFragmentManager(), "yes");
             }
         });
 
