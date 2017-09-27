@@ -45,10 +45,10 @@ public class MainActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
+        //UI
         tvIP = (TextView) findViewById(R.id.tvIP);
         etSendString = (EditText) findViewById(R.id.etSendString);
         btSend = (Button) findViewById(R.id.btSend);
-        etSendString.setEnabled(true);
         btNo = (Button) findViewById(R.id.btNo);
         btYes = (Button) findViewById(R.id.btYes);
         btEnemy = (Button) findViewById(R.id.btEnemy);
@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
         btDistance = (Button) findViewById(R.id.btDistance);
         btNumber = (Button) findViewById(R.id.btNumber);
 
+        //preference
         pref = PreferenceManager.getDefaultSharedPreferences(this);
 
         //SEND button
@@ -93,6 +94,7 @@ public class MainActivity extends Activity {
                 talk("はい");
             }
         });
+        //Yes button Long click
         btYes.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -124,16 +126,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("きょりにゅうりょくがめんよてい");
                 //TODO enter distance
-                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
-                alertDialog.setTitle("hi");
-                alertDialog.setMessage("comming soon (tm)");
-
-                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // here you can add functions
-                    }
-                });
-                alertDialog.show();
             }
         });
         //Number button
@@ -142,16 +134,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("にんずうにゅうりょくがめんよてい");
                 //TODO enter number
-                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
-                alertDialog.setTitle("hi");
-                alertDialog.setMessage("comming soon (tm)");
-
-                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // here you can add functions
-                    }
-                });
-                alertDialog.show();
             }
         });
 

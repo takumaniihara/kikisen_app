@@ -91,7 +91,6 @@ public class BouyomiChan4J {
         try {
             socket = new Socket(host, port);
             socket.setSoTimeout(100);
-//			System.out.println("接続しました" + socket.getRemoteSocketAddress());
             Log.v(TAG, "接続しました" + socket.getRemoteSocketAddress());
             out = new DataOutputStream(socket.getOutputStream());
             out.write(data);
@@ -108,13 +107,11 @@ public class BouyomiChan4J {
                 }
                 if (socket != null) {
                     socket.close();
-//					System.out.println("切断します");
                     Log.v(TAG, "切断します");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//			System.out.println("終了します");
             Log.v(TAG, "終了します");
         }
     }
