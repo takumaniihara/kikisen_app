@@ -1,8 +1,6 @@
 package jp.gr.java_conf.nippy.kikisen;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -124,16 +122,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("きょりにゅうりょくがめんよてい");
                 //TODO enter distance
-                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
-                alertDialog.setTitle("hi");
-                alertDialog.setMessage("comming soon (tm)");
 
-                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // here you can add functions
-                    }
-                });
-                alertDialog.show();
             }
         });
         //Number button
@@ -142,16 +131,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("にんずうにゅうりょくがめんよてい");
                 //TODO enter number
-                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
-                alertDialog.setTitle("hi");
-                alertDialog.setMessage("comming soon (tm)");
 
-                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // here you can add functions
-                    }
-                });
-                alertDialog.show();
             }
         });
 
