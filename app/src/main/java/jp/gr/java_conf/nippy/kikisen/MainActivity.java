@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -42,9 +43,9 @@ public class MainActivity extends Activity {
 
     //タイマー用の時間リスト
     //青い円が動く時間
-    long time_dec_list[] = {0, 5 * 60, 2 * 60 + 30, 1 * 60 + 30, 1 * 60 + 30, 1 * 60, 1 * 60, 1 * 60, 1 * 60, 0};
+    long time_dec_list[] = {0, 5 * 60, 3 * 60 + 20, 2 * 60 + 30, 2 * 60, 2 * 60, 1 * 60 + 30, 1 * 60 + 30, 60};
     //青い円が動かない時間
-    long time_list[] = {2 * 60 + 5, 5 * 60, 3 * 60 + 30, 2 * 60 + 30, 2 * 60 + 30, 2 * 60, 2 * 60, 2 * 60, 2 * 60};
+    long time_list[] = {2 * 60 + 5, 5 * 60, 2 * 60 + 20, 1 * 60 + 30, 1 * 60, 40, 30, 30, 30};
     long alert_time[] = new long[time_list.length];
     long total_time = 0;
 
@@ -56,6 +57,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
+        // Keep screen on
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //UI
         tvIP = (TextView) findViewById(R.id.tvIP);
@@ -79,7 +82,8 @@ public class MainActivity extends Activity {
         for (int i = 0; i < time_list.length; i++) {
             alert_time[i] = 0;
             for (int j = i; j < time_list.length; j++) {
-                alert_time[i] += (time_list[j] + time_dec_list[j]);
+                alert_time[i] += time_list[j];
+                if (j != 0) alert_time[i] += time_dec_list[j - 1];
             }
             Log.v(TAG, "hogehoge" + alert_time[i]);
         }
@@ -234,18 +238,13 @@ public class MainActivity extends Activity {
         public void onTick(long millisUntilFinished) {
             for (int i = 0; i < alert_time.length; i++) {
                 if (millisUntilFinished < alert_time[i] * 1000 && alert_time[i] * 1000 < old_time) {
-                    if (i != 1) talk("だい" + (i - 1) + "回 円更新始まります");
+                    if (i != 1) talk("だい" + (i - 1) + "回 円縮小始まります");
                     if (i == 1) talk("最初のサークルがマップにマークされました");
                 }
             }
             for (int i = 0; i < alert_time.length; i++) {
                 if (millisUntilFinished < (alert_time[i] + 60) * 1000 && (alert_time[i] + 60) * 1000 < old_time) {
-                    if (i != 1) talk("だい" + (i - 1) + "回 円更新まであといっぷんです");
-                }
-            }
-            for (int i = 0; i < alert_time.length; i++) {
-                if (millisUntilFinished < (alert_time[i] + 30) * 1000 && (alert_time[i] + 30) * 1000 < old_time) {
-                    if (i != 1) talk("だい" + (i - 1) + "回 円更新まであとさんじゅうびょうです");
+                    if (i != 1) talk("だい" + (i - 1) + "回 円縮小まであといっぷんです");
                 }
             }
 
