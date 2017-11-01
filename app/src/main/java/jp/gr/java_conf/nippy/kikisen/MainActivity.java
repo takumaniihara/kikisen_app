@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,15 +31,22 @@ public class MainActivity extends Activity {
     Button btDirection;
     Button btDistance;
     Button btNumber;
+    Button btTimerStart;
+    Button btTimerEnd;
+    TextView tvTimer;
     BouyomiChan4J bouyomi;
     SharedPreferences pref;
+
+    //タイマー用の時間リスト
+    long time_list[] = {2 * 60 + 5, 5 * 60, 3 * 60 + 30, 2 * 60 + 30, 2 * 60 + 30, 2 * 60, 2 * 60, 2 * 60, 2 * 60};
+    long alert_time[] = new long[time_list.length];
+    long total_time = 0;
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
@@ -53,8 +61,25 @@ public class MainActivity extends Activity {
         btDirection = (Button) findViewById(R.id.btDirection);
         btDistance = (Button) findViewById(R.id.btDistance);
         btNumber = (Button) findViewById(R.id.btNumber);
+        btTimerStart = (Button) findViewById(R.id.btTimerStart);
+        btTimerEnd = (Button) findViewById(R.id.btTimerEnd);
+        tvTimer = (TextView) findViewById(R.id.tvTimer);
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        tvTimer.setText("press start");
+
+        for (int i = 0; i < time_list.length; i++) {
+            for (int j = i; j < time_list.length; j++) {
+                alert_time[i] += time_list[j];
+            }
+            Log.v(TAG, "hogehoge" + alert_time[i]);
+        }
+        total_time = alert_time[0];
+        Log.v(TAG, "total time " + total_time);
+        // CountDownTimer(long millisInFuture, long countDownInterval)
+        // 3分= 3x60x1000 = 180000 msec
+        final CountDown countDown = new CountDown(total_time * 1000, 100);
 
         //SEND button
         btSend.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +172,22 @@ public class MainActivity extends Activity {
                 }).start();
             }
         });
+
+        //タイマー関係
+        btTimerStart.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                countDown.start();
+                talk("しあいかいしです．よろしくお願いします");
+            }
+        });
+        btTimerEnd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                countDown.cancel();
+                tvTimer.setText("press start");
+            }
+        });
+
+
     }
 
     //send string to bouyomi-chan
@@ -161,6 +202,48 @@ public class MainActivity extends Activity {
                             str);
                 }
             }).start();
+        }
+    }
+
+    class CountDown extends CountDownTimer {
+
+        public CountDown(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            // 完了
+            tvTimer.setText("0:00.000");
+        }
+
+        long old_time = 0;
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            for (int i = 0; i < alert_time.length; i++) {
+                if (millisUntilFinished < alert_time[i] * 1000 && alert_time[i] * 1000 < old_time) {
+                    if (i != 1) talk("だい" + (i) + "回 円更新始まります");
+                    if (i == 1) talk("最初のサークルがマップにマークされました");
+                }
+            }
+            for (int i = 0; i < alert_time.length; i++) {
+                if (millisUntilFinished < (alert_time[i] + 60) * 1000 && (alert_time[i] + 60) * 1000 < old_time) {
+                    if (i != 1) talk("だい" + (i) + "回 円更新まであといっぷんです");
+                }
+            }
+            for (int i = 0; i < alert_time.length; i++) {
+                if (millisUntilFinished < (alert_time[i] + 30) * 1000 && (alert_time[i] + 30) * 1000 < old_time) {
+                    if (i != 1) talk("だい" + (i) + "回 円更新まであとさんじゅうびょうです");
+                }
+            }
+
+            old_time = millisUntilFinished;
+            // 残り時間を分、秒、ミリ秒に分割
+            long mm = millisUntilFinished / 1000 / 60;
+            long ss = millisUntilFinished / 1000 % 60;
+            long ms = millisUntilFinished - ss * 1000 - mm * 1000 * 60;
+            tvTimer.setText(String.format("%1$02d:%2$02d.%3$03d", mm, ss, ms));
         }
     }
 

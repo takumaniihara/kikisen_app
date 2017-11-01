@@ -10,17 +10,16 @@
         android:id="@+id/btSkip"
         android:layout_width="0dp"
         android:layout_height="58dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:text="読み上げ中断"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvIP" />
 
     <EditText
         android:id="@+id/etSendString"
@@ -159,58 +158,33 @@
 
     <Button
         android:id="@+id/btTimerStart"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Start"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvTimerNext"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginStart="8dp"
+        android:text="Start"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btTimerEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="END"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvTimerTotal"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_marginStart="8dp"
+        android:text="END"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toEndOf="@+id/btTimerStart" />
 
     <TextView
-        android:id="@+id/tvTimerTotal"
+        android:id="@+id/tvTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="8dp"
         android:text="total30:00:00"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/btSkip"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/btTimerPause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PAUSE"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvTimerTotal"
-        app:layout_constraintRight_toLeftOf="@+id/btTimerEnd"
-        android:layout_marginRight="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/btTimerStart"
-        android:layout_marginLeft="8dp" />
-
-    <TextView
-        android:id="@+id/tvTimerNext"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="next 3:00"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvTimerTotal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tvTimerTotal" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toEndOf="@+id/btTimerEnd" />
 
 </android.support.constraint.ConstraintLayout>
