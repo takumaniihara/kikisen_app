@@ -41,6 +41,9 @@ public class MainActivity extends Activity {
     SharedPreferences pref;
 
     //タイマー用の時間リスト
+    //青い円が動く時間
+    long time_dec_list[] = {0, 5 * 60, 2 * 60 + 30, 1 * 60 + 30, 1 * 60 + 30, 1 * 60, 1 * 60, 1 * 60, 1 * 60, 0};
+    //青い円が動かない時間
     long time_list[] = {2 * 60 + 5, 5 * 60, 3 * 60 + 30, 2 * 60 + 30, 2 * 60 + 30, 2 * 60, 2 * 60, 2 * 60, 2 * 60};
     long alert_time[] = new long[time_list.length];
     long total_time = 0;
@@ -74,8 +77,9 @@ public class MainActivity extends Activity {
         tvTimer.setText("press start");
 
         for (int i = 0; i < time_list.length; i++) {
+            alert_time[i] = 0;
             for (int j = i; j < time_list.length; j++) {
-                alert_time[i] += time_list[j];
+                alert_time[i] += (time_list[j] + time_dec_list[j]);
             }
             Log.v(TAG, "hogehoge" + alert_time[i]);
         }
@@ -251,6 +255,7 @@ public class MainActivity extends Activity {
             long ss = millisUntilFinished / 1000 % 60;
             long ms = millisUntilFinished - ss * 1000 - mm * 1000 * 60;
             tvTimer.setText(String.format("%1$02d:%2$02d.%3$03d", mm, ss, ms));
+            tvTimer.setText(String.format(millisUntilFinished + ""));
         }
     }
 
