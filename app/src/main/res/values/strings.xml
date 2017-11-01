@@ -1,9 +1,19 @@
 <resources>
+    <!-- Strings related to Application -->
     <string name="app_name">聞き専</string>
-
     <string name = "cancel">キャンセル</string>
+    <string name = "ok">OK</string>
+
+    <!-- Strings related to TEST -->
     <string name = "dialog_fire_missiles">このアプリについて</string>
     <string name = "fire">ファイヤ！</string>
+
+    <!-- Strings related to Button -->
+    <string-array name="list_yes_lognclick">
+        <item>了解</item>
+        <item>おけー</item>
+    </string-array>
+
     <!-- Strings related to Settings -->
     <string name = "preference_title">設定</string>
     <string name = "how_to_use_title">使い方</string>

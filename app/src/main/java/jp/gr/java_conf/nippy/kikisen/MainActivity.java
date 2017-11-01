@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import jp.gr.java_conf.nippy.kikisen.dialog.DirectionDialogFragment;
+import jp.gr.java_conf.nippy.kikisen.dialog.DistanceDialogFragment;
+import jp.gr.java_conf.nippy.kikisen.dialog.NumberDialogFragment;
 import jp.gr.java_conf.nippy.kikisen.dialog.YesDialogFragment;
 
 public class MainActivity extends Activity {
@@ -51,10 +54,10 @@ public class MainActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
+        //UI
         tvIP = (TextView) findViewById(R.id.tvIP);
         etSendString = (EditText) findViewById(R.id.etSendString);
         btSend = (Button) findViewById(R.id.btSend);
-        etSendString.setEnabled(true);
         btNo = (Button) findViewById(R.id.btNo);
         btYes = (Button) findViewById(R.id.btYes);
         btEnemy = (Button) findViewById(R.id.btEnemy);
@@ -65,6 +68,7 @@ public class MainActivity extends Activity {
         btTimerEnd = (Button) findViewById(R.id.btTimerEnd);
         tvTimer = (TextView) findViewById(R.id.tvTimer);
 
+        //preference
         pref = PreferenceManager.getDefaultSharedPreferences(this);
 
         tvTimer.setText("press start");
@@ -116,11 +120,12 @@ public class MainActivity extends Activity {
                 talk("はい");
             }
         });
+        //Yes button Long click
         btYes.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                YesDialogFragment yesDialog = new YesDialogFragment();
-                yesDialog.show(getFragmentManager(), "yes");
+                YesDialogFragment yesDialogFragment = new YesDialogFragment();
+                yesDialogFragment.show(getFragmentManager(), "yes");
                 return true;
             }
         });
@@ -137,8 +142,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("ほういにゅうりょくがめんよてい");
                 //TODO enter direction
-                FireMissilesDialogFragment hoge = new FireMissilesDialogFragment();
-                hoge.show(getFragmentManager(), "test");
+                DirectionDialogFragment directionDialogFragment = new DirectionDialogFragment();
+                directionDialogFragment.show(getFragmentManager(), "yes");
             }
         });
         //Distance button
@@ -147,7 +152,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("きょりにゅうりょくがめんよてい");
                 //TODO enter distance
-
+                DistanceDialogFragment distanceDialogFragment = new DistanceDialogFragment();
+                distanceDialogFragment.show(getFragmentManager(), "yes");
             }
         });
         //Number button
@@ -156,7 +162,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //talk("にんずうにゅうりょくがめんよてい");
                 //TODO enter number
-
+                NumberDialogFragment numberDialogFragment = new NumberDialogFragment();
+                numberDialogFragment.show(getFragmentManager(), "yes");
             }
         });
 
@@ -223,18 +230,18 @@ public class MainActivity extends Activity {
         public void onTick(long millisUntilFinished) {
             for (int i = 0; i < alert_time.length; i++) {
                 if (millisUntilFinished < alert_time[i] * 1000 && alert_time[i] * 1000 < old_time) {
-                    if (i != 1) talk("だい" + (i) + "回 円更新始まります");
+                    if (i != 1) talk("だい" + (i - 1) + "回 円更新始まります");
                     if (i == 1) talk("最初のサークルがマップにマークされました");
                 }
             }
             for (int i = 0; i < alert_time.length; i++) {
                 if (millisUntilFinished < (alert_time[i] + 60) * 1000 && (alert_time[i] + 60) * 1000 < old_time) {
-                    if (i != 1) talk("だい" + (i) + "回 円更新まであといっぷんです");
+                    if (i != 1) talk("だい" + (i - 1) + "回 円更新まであといっぷんです");
                 }
             }
             for (int i = 0; i < alert_time.length; i++) {
                 if (millisUntilFinished < (alert_time[i] + 30) * 1000 && (alert_time[i] + 30) * 1000 < old_time) {
-                    if (i != 1) talk("だい" + (i) + "回 円更新まであとさんじゅうびょうです");
+                    if (i != 1) talk("だい" + (i - 1) + "回 円更新まであとさんじゅうびょうです");
                 }
             }
 
