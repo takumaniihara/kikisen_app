@@ -43,9 +43,9 @@ public class MainActivity extends Activity {
 
     //タイマー用の時間リスト
     //青い円が動く時間
-    long time_dec_list[] = {0, 5 * 60, 3 * 60 + 20, 2 * 60 + 30, 2 * 60, 2 * 60, 1 * 60 + 30, 1 * 60 + 30, 60};
+    long time_dec_list[] = {0, 5 * 60, 2 * 60 + 20, 2 * 60 + 20, 1 * 60 + 30, 1 * 60, 40, 30, 30};
     //青い円が動かない時間
-    long time_list[] = {2 * 60 + 5, 5 * 60, 2 * 60 + 20, 1 * 60 + 30, 1 * 60, 40, 30, 30, 30};
+    long time_list[] = {2 * 60 + 3, 5 * 60, 3 * 60 + 20, 2 * 60 + 30, 2 * 60 + 20, 2 * 60, 2 * 60, 1 * 60 + 30, 1 * 60 + 30};
     long alert_time[] = new long[time_list.length];
     long total_time = 0;
 
@@ -192,7 +192,7 @@ public class MainActivity extends Activity {
         btTimerStart.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 countDown.start();
-                talk("しあいかいしです．よろしくお願いします");
+                talk("しあいかいし");
             }
         });
         btTimerEnd.setOnClickListener(new View.OnClickListener() {
@@ -239,7 +239,7 @@ public class MainActivity extends Activity {
             for (int i = 0; i < alert_time.length; i++) {
                 if (millisUntilFinished < alert_time[i] * 1000 && alert_time[i] * 1000 < old_time) {
                     if (i != 1) talk("だい" + (i - 1) + "回 円縮小始まります");
-                    if (i == 1) talk("最初のサークルがマップにマークされました");
+                    if (i == 1) talk("最初のサークルがマップにマークされます");
                 }
             }
             for (int i = 0; i < alert_time.length; i++) {
