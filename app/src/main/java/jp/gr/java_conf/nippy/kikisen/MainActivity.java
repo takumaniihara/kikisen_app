@@ -42,9 +42,9 @@ public class MainActivity extends Activity {
     SharedPreferences pref;
 
     //タイマー用の時間リスト
-    final long circle_update[] = {2 * 60, 12 * 60, 17 * 60 + 40, 21 * 60 + 40, 24 * 60 + 40, 27 * 60 + 20, 29 * 60 + 20, 31 * 60 + 20};
-    final long circle_shrink_start[] = {0, 7 * 60, 15 * 60 + 20, 20 * 60 + 10, 23 * 60 + 40, 26 * 60 + 40, 28 * 60 + 50, 30 * 60 + 50};
-    final long total_time = circle_update[circle_update.length - 1] - 5;
+    final long circle_update[] = {2 * 60, 12 * 60, 17 * 60 + 40, 21 * 60 + 40, 24 * 60 + 40, 27 * 60 + 20, 29 * 60 + 20, 31 * 60 + 20}; //円更新される時間
+    final long circle_shrink_start[] = {0, 7 * 60, 15 * 60 + 20, 20 * 60 + 10, 23 * 60 + 40, 26 * 60 + 40, 28 * 60 + 50, 30 * 60 + 50}; //円の縮小が開始される時間
+    final long total_time = circle_update[circle_update.length - 1] - 5;//-5はカウントダウンが終わってから飛行機が動き出すまでの時間(sec)
 
     /**
      * Called when the activity is first created.
@@ -258,11 +258,11 @@ public class MainActivity extends Activity {
             }
             //TODO 設定からどの通知を行うか選択できるように
             //if(pref.getBoolean("multi_select_list_preference_alert_time",false) == false){
-                for (int i = 0; i < circle_shrink_start.length; i++) {
-                    if (old_time < (circle_shrink_start[i] - 120) * 1000 && (circle_shrink_start[i] - 120) * 1000 < time_now) {
-                        talk_auto("だい" + (i - 1) + "回 円縮小 2分前です");
-                    }
+            for (int i = 0; i < circle_shrink_start.length; i++) {
+                if (old_time < (circle_shrink_start[i] - 120) * 1000 && (circle_shrink_start[i] - 120) * 1000 < time_now) {
+                    talk_auto("だい" + (i - 1) + "回 円縮小 2分前です");
                 }
+            }
             //}
 
 
