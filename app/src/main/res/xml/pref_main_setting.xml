@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="棒読みちゃんのPCを指定">
+
+    </PreferenceCategory>
     <EditTextPreference
         android:defaultValue="127.0.0.1"
         android:digits="0123456789."
@@ -14,6 +17,9 @@
         android:selectAllOnFocus="true"
         android:summary="PCのポート番号"
         android:title="port" />
+    <PreferenceCategory android:title="棒読みちゃんの読み上げ設定">
+
+    </PreferenceCategory>
     <ListPreference
         android:defaultValue="0"
         android:entries="@array/list_preference_voice_type"
@@ -42,4 +48,35 @@
         android:key="list_preference_volume"
         android:summary="%s"
         android:title="volume" />
+    <EditTextPreference
+        android:defaultValue=" "
+        android:key="edit_text_preference_command"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="voiceroid talk plus のコマンド"
+        android:title="command" />
+    <PreferenceCategory android:title="タイマー通知の設定">
+
+    </PreferenceCategory>
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/list_preference_voice_type"
+        android:entryValues="@array/list_preference_voice_type_value"
+        android:key="list_preference_type_auto"
+        android:summary="%s"
+        android:title="voice type timer" />
+    <MultiSelectListPreference
+        android:defaultValue="@array/list_preference_timer_alert_time"
+        android:entries="@array/list_preference_timer_alert_time_string"
+        android:entryValues="@array/list_preference_timer_alert_time"
+        android:key="multi_select_list_preference_alert_time"
+        android:summary="タイマーで通知を行うタイミング"
+        android:title="alert time" />
+    <EditTextPreference
+        android:defaultValue=" "
+        android:key="edit_text_preference_command_auto"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="タイマーのvoiceroid talk plus のコマンド"
+        android:title="command for timer" />
 </PreferenceScreen>

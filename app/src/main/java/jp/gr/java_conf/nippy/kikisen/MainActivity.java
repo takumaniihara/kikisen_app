@@ -42,12 +42,9 @@ public class MainActivity extends Activity {
     SharedPreferences pref;
 
     //タイマー用の時間リスト
-    //青い円が動く時間
-    long time_dec_list[] = {0, 5 * 60, 2 * 60 + 20, 2 * 60 + 20, 1 * 60 + 30, 1 * 60, 40, 30, 30};
-    //青い円が動かない時間
-    long time_list[] = {2 * 60 + 3, 5 * 60, 3 * 60 + 20, 2 * 60 + 30, 2 * 60 + 20, 2 * 60, 2 * 60, 1 * 60 + 30, 1 * 60 + 30};
-    long alert_time[] = new long[time_list.length];
-    long total_time = 0;
+    final long circle_update[] = {2 * 60, 12 * 60, 17 * 60 + 40, 21 * 60 + 40, 24 * 60 + 40, 27 * 60 + 20, 29 * 60 + 20, 31 * 60 + 20};
+    final long circle_shrink_start[] = {0, 7 * 60, 15 * 60 + 20, 20 * 60 + 10, 23 * 60 + 40, 26 * 60 + 40, 28 * 60 + 50, 30 * 60 + 50};
+    final long total_time = circle_update[circle_update.length - 1];
 
     /**
      * Called when the activity is first created.
@@ -79,15 +76,6 @@ public class MainActivity extends Activity {
 
         tvTimer.setText("press start");
 
-        for (int i = 0; i < time_list.length; i++) {
-            alert_time[i] = 0;
-            for (int j = i; j < time_list.length; j++) {
-                alert_time[i] += time_list[j];
-                if (j != 0) alert_time[i] += time_dec_list[j - 1];
-            }
-            Log.v(TAG, "hogehoge" + alert_time[i]);
-        }
-        total_time = alert_time[0];
         Log.v(TAG, "total time " + total_time);
         // CountDownTimer(long millisInFuture, long countDownInterval)
         // 3分= 3x60x1000 = 180000 msec
@@ -192,7 +180,7 @@ public class MainActivity extends Activity {
         btTimerStart.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 countDown.start();
-                talk("しあいかいし");
+                talk_auto("しあいかいし");
             }
         });
         btTimerEnd.setOnClickListener(new View.OnClickListener() {
@@ -214,7 +202,22 @@ public class MainActivity extends Activity {
                             Integer.parseInt(pref.getString("list_preference_speed", "100")),
                             Integer.parseInt(pref.getString("list_preference_interval", "100")),
                             Integer.parseInt(pref.getString("list_preference_type", "0")),
-                            str);
+                            pref.getString("edit_text_preference_command", " ") + str);
+                }
+            }).start();
+        }
+    }
+
+    //talk for timer
+    private void talk_auto(final String str) {
+        if (!(str.equals(""))) {
+            new Thread(new Runnable() {
+                public void run() {
+                    bouyomi.talk(Integer.parseInt(pref.getString("list_preference_volume", "50")),
+                            Integer.parseInt(pref.getString("list_preference_speed", "100")),
+                            Integer.parseInt(pref.getString("list_preference_interval", "100")),
+                            Integer.parseInt(pref.getString("list_preference_type_auto", "0")),
+                            pref.getString("edit_text_preference_command_auto", "") + str);
                 }
             }).start();
         }
@@ -236,25 +239,48 @@ public class MainActivity extends Activity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            for (int i = 0; i < alert_time.length; i++) {
-                if (millisUntilFinished < alert_time[i] * 1000 && alert_time[i] * 1000 < old_time) {
-                    if (i != 1) talk("だい" + (i - 1) + "回 円縮小始まります");
-                    if (i == 1) talk("最初のサークルがマップにマークされます");
+            final long time_now = total_time * 1000 - millisUntilFinished;
+
+            for (int i = 0; i < circle_shrink_start.length; i++) {
+                if (old_time < circle_shrink_start[i] * 1000 && circle_shrink_start[i] * 1000 < time_now) {
+                    talk_auto("だい" + (i - 1) + "回 円縮小始まります");
                 }
             }
-            for (int i = 0; i < alert_time.length; i++) {
-                if (millisUntilFinished < (alert_time[i] + 60) * 1000 && (alert_time[i] + 60) * 1000 < old_time) {
-                    if (i != 1) talk("だい" + (i - 1) + "回 円縮小まであといっぷんです");
+            for (int i = 0; i < circle_shrink_start.length; i++) {
+                if (old_time < (circle_shrink_start[i] + 30) * 1000 && (circle_shrink_start[i] + 30) * 1000 < time_now) {
+                    if (i != 0) talk_auto("だい" + (i - 1) + "回 円縮小 30秒前です");
+                }
+            }
+            for (int i = 0; i < circle_shrink_start.length; i++) {
+                if (old_time < (circle_shrink_start[i] + 60) * 1000 && (circle_shrink_start[i] + 60) * 1000 < time_now) {
+                    if (i != 0) talk_auto("だい" + (i - 1) + "回 円縮小 1分前です");
+                }
+            }
+            //TODO 設定からどの通知を行うか選択できるように
+            //if(pref.getBoolean("multi_select_list_preference_alert_time",false) == false){
+                for (int i = 0; i < circle_shrink_start.length; i++) {
+                    if (old_time < (circle_shrink_start[i] + 120) * 1000 && (circle_shrink_start[i] + 120) * 1000 < time_now) {
+                        if (i != 0) talk_auto("だい" + (i - 1) + "回 円縮小 2分前です");
+                    }
+                }
+            //}
+
+
+            for (int i = 0; i < circle_update.length; i++) {
+                if (old_time < circle_update[i] * 1000 && circle_update[i] * 1000 < time_now) {
+                    if (i != 0) talk_auto("円更新");
+                    if (i == 0) talk_auto("最初の円がマップにマークされます");
                 }
             }
 
-            old_time = millisUntilFinished;
+            old_time = time_now;
+
             // 残り時間を分、秒、ミリ秒に分割
             long mm = millisUntilFinished / 1000 / 60;
             long ss = millisUntilFinished / 1000 % 60;
             long ms = millisUntilFinished - ss * 1000 - mm * 1000 * 60;
-            tvTimer.setText(String.format("%1$02d:%2$02d.%3$03d", mm, ss, ms));
-            tvTimer.setText(String.format(millisUntilFinished + ""));
+            //tvTimer.setText(String.format("%1$02d:%2$02d.%3$03d", mm, ss, ms));
+            tvTimer.setText(String.format(" " + (int) (time_now / 1000) + "sec"));
         }
     }
 

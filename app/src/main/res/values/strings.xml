@@ -87,4 +87,16 @@
         <item>75</item>
         <item>50</item>
     </string-array>
+    <string-array name="list_preference_timer_alert_time">
+        <item>60</item>
+        <item>30</item>
+        <item>5</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="list_preference_timer_alert_time_string">
+        <item>60秒前</item>
+        <item>30秒前</item>
+        <item>5秒前</item>
+        <item>縮小開始時</item>
+    </string-array>
 </resources>
