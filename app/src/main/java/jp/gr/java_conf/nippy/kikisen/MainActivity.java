@@ -44,7 +44,8 @@ public class MainActivity extends Activity {
     //タイマー用の時間リスト
     final long circle_update[] = {2 * 60, 12 * 60, 17 * 60 + 40, 21 * 60 + 40, 24 * 60 + 40, 27 * 60 + 20, 29 * 60 + 20, 31 * 60 + 20}; //円更新される時間
     final long circle_shrink_start[] = {0, 7 * 60, 15 * 60 + 20, 20 * 60 + 10, 23 * 60 + 40, 26 * 60 + 40, 28 * 60 + 50, 30 * 60 + 50}; //円の縮小が開始される時間
-    final long total_time = circle_update[circle_update.length - 1] - 5;//-5はカウントダウンが終わってから飛行機が動き出すまでの時間(sec)
+    final long total_time = circle_update[circle_update.length - 1];
+    final long err_time = 7;//カウントダウンが終わってから飛行機が動き出すまでの時間(sec)
 
     /**
      * Called when the activity is first created.
@@ -180,7 +181,7 @@ public class MainActivity extends Activity {
         btTimerStart.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 countDown.start();
-                talk_auto("しあいかいし");
+                talk_auto("試合開始");
             }
         });
         btTimerEnd.setOnClickListener(new View.OnClickListener() {
@@ -239,37 +240,51 @@ public class MainActivity extends Activity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            final long time_now = total_time * 1000 - millisUntilFinished;
+            final long time_now = total_time * 1000 - millisUntilFinished - err_time * 1000;
 
-            for (int i = 0; i < circle_shrink_start.length; i++) {
-                if (old_time < circle_shrink_start[i] * 1000 && circle_shrink_start[i] * 1000 < time_now) {
-                    talk_auto("だい" + (i - 1) + "回 円縮小始まります");
+            if (pref.getBoolean("switch_preference_auto_start", false)) {
+                for (int i = 0; i < circle_shrink_start.length; i++) {
+                    if (old_time < circle_shrink_start[i] * 1000 && circle_shrink_start[i] * 1000 < time_now) {
+                        if (i != 0) talk_auto("だい" + (i) + "回 円縮小 始まります");
+                    }
                 }
             }
-            for (int i = 0; i < circle_shrink_start.length; i++) {
-                if (old_time < (circle_shrink_start[i] - 30) * 1000 && (circle_shrink_start[i] - 30) * 1000 < time_now) {
-                    talk_auto("だい" + (i - 1) + "回 円縮小 30秒前です");
-                }
-            }
-            for (int i = 0; i < circle_shrink_start.length; i++) {
-                if (old_time < (circle_shrink_start[i] - 60) * 1000 && (circle_shrink_start[i] - 60) * 1000 < time_now) {
-                    talk_auto("だい" + (i - 1) + "回 円縮小 1分前です");
-                }
-            }
-            //TODO 設定からどの通知を行うか選択できるように
-            //if(pref.getBoolean("multi_select_list_preference_alert_time",false) == false){
-            for (int i = 0; i < circle_shrink_start.length; i++) {
-                if (old_time < (circle_shrink_start[i] - 120) * 1000 && (circle_shrink_start[i] - 120) * 1000 < time_now) {
-                    talk_auto("だい" + (i - 1) + "回 円縮小 2分前です");
-                }
-            }
-            //}
 
+            if (pref.getBoolean("switch_preference_auto_5sec", false)) {
+                for (int i = 0; i < circle_shrink_start.length; i++) {
+                    if (old_time < (circle_shrink_start[i] - 5) * 1000 && (circle_shrink_start[i] - 5) * 1000 < time_now) {
+                        if (i != 0) talk_auto("5秒前です");
+                    }
+                }
+            }
+            if (pref.getBoolean("switch_preference_auto_30sec", false)) {
+                for (int i = 0; i < circle_shrink_start.length; i++) {
+                    if (old_time < (circle_shrink_start[i] - 30) * 1000 && (circle_shrink_start[i] - 30) * 1000 < time_now) {
+                        if (i != 0) talk_auto("30秒前です");
+                    }
+                }
+            }
+            if (pref.getBoolean("switch_preference_auto_60sec", false)) {
+                for (int i = 0; i < circle_shrink_start.length; i++) {
+                    if (old_time < (circle_shrink_start[i] - 60) * 1000 && (circle_shrink_start[i] - 60) * 1000 < time_now) {
+                        if (i != 0) talk_auto("だい" + (i) + "回 円縮小 1分前です");
+                    }
+                }
+            }
 
-            for (int i = 0; i < circle_update.length; i++) {
-                if (old_time < circle_update[i] * 1000 && circle_update[i] * 1000 < time_now) {
-                    if (i != 0) talk_auto("円更新");
-                    if (i == 0) talk_auto("最初の円がマップにマークされます");
+            if (pref.getBoolean("switch_preference_auto_120sec", false)) {
+                for (int i = 0; i < circle_shrink_start.length; i++) {
+                    if (old_time < (circle_shrink_start[i] - 120) * 1000 && (circle_shrink_start[i] - 120) * 1000 < time_now) {
+                        if (i != 0) talk_auto("だい" + (i) + "回 円縮小 2分前です");
+                    }
+                }
+            }
+            if (pref.getBoolean("switch_preference_auto_circle_update", false)) {
+                for (int i = 0; i < circle_update.length; i++) {
+                    if (old_time < circle_update[i] * 1000 && circle_update[i] * 1000 < time_now) {
+                        if (i == 0) talk_auto("最初の円がマップにマークされます");
+                        if (i != 0) talk_auto("円が更新されます");
+                    }
                 }
             }
 
@@ -333,9 +348,10 @@ public class MainActivity extends Activity {
                 bouyomi = new BouyomiChan4J(pref.getString("edit_text_preference_ip", "127.0.0.1"), Integer.parseInt(pref.getString("edit_text_preference_port", "50001")));
             }
         }).start();
-        tvIP.setText("開始しました \nip:" + pref.getString("edit_text_preference_ip", "127.0.0.1") + "\nport:" + pref.getString("edit_text_preference_port", "50001")
+        /*tvIP.setText("開始しました \nip:" + pref.getString("edit_text_preference_ip", "127.0.0.1") + "\nport:" + pref.getString("edit_text_preference_port", "50001")
                 + "\nvolume:" + pref.getString("list_preference_volume", "50") + "\nspeed:" + pref.getString("list_preference_speed", "100")
-                + "\ninterval:" + pref.getString("list_preference_interval", "100") + "\nvoice type:" + pref.getString("list_preference_type:", "0"));
+                + "\ninterval:" + pref.getString("list_preference_interval", "100") + "\nvoice type:" + pref.getString("list_preference_type:", "0"));*/
+        tvIP.setText("ip:" + pref.getString("edit_text_preference_ip", "127.0.0.1") + " port:" + pref.getString("edit_text_preference_port", "50001"));
     }
 
     @Override

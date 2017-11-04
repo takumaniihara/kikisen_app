@@ -65,13 +65,6 @@
         android:key="list_preference_type_auto"
         android:summary="%s"
         android:title="voice type timer" />
-    <MultiSelectListPreference
-        android:defaultValue="@array/list_preference_timer_alert_time"
-        android:entries="@array/list_preference_timer_alert_time_string"
-        android:entryValues="@array/list_preference_timer_alert_time"
-        android:key="multi_select_list_preference_alert_time"
-        android:summary="タイマーで通知を行うタイミング"
-        android:title="alert time" />
     <EditTextPreference
         android:defaultValue=" "
         android:key="edit_text_preference_command_auto"
@@ -79,4 +72,28 @@
         android:singleLine="true"
         android:summary="タイマーのvoiceroid talk plus のコマンド"
         android:title="command for timer" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="switch_preference_auto_circle_update"
+        android:title="円更新通知" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="switch_preference_auto_start"
+        android:title="縮小開始通知" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="switch_preference_auto_5sec"
+        android:title="縮小5秒前通知" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="switch_preference_auto_30sec"
+        android:title="縮小30秒前通知" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="switch_preference_auto_60sec"
+        android:title="縮小1分前通知" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="switch_preference_auto_120sec"
+        android:title="縮小2分前通知" />
 </PreferenceScreen>
